@@ -53,6 +53,7 @@ module.exports = {
             }
         })
     },
+
     login: function(req, res) {
         // Validate User
         User.findOne({
@@ -84,6 +85,23 @@ module.exports = {
                     return res.ok();
                 }
             })
+        })
+    },
+
+    logout: function(req, res) {
+        User.findOne({
+            id: req.session.me
+        }, function(err, user) {
+            if(err) {
+                return res.negotiate(err);
+            }
+            if(!user) {
+                return res.notFound();
+            }
+
+            req.session.me = null;
+
+            return res.redirect('/');
         })
     }
 };
