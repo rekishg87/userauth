@@ -78,7 +78,8 @@ module.exports = {
                     return res.notFound();
                 },
                 success: function() {
-                    //req.session.me = user.id;
+                    req.session.me = user.id;
+
                     console.log("SUCCESS");
                     return res.ok();
                 }
