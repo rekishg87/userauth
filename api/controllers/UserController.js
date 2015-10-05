@@ -15,7 +15,7 @@ module.exports = {
         // Encrypt Password
         Passwords.encryptPassword({
             password: req.param('password'),
-            difficulty: 10,
+            difficulty: 10
         }).exec({
             error: function(err) {
                 return res.negotiate(err);
@@ -51,6 +51,38 @@ module.exports = {
                     }
                 })
             }
+        })
+    },
+    login: function(req, res) {
+        // Validate User
+        User.findOne({
+            email: req.param('email')
+        }, function foundUser(err, user) {
+            if(err) {
+                return res.negotiate(err);
+            }
+            if(!user) {
+                return res.notFound();
+            }
+
+            require('machinepack-passwords').checkPassword({
+                passwordAttempt: req.param('password'),
+                encryptedPassword: user.password
+            }).exec({
+                error: function(err){
+                    console.log("Password Error");
+                    return res.negotiate(err);
+                },
+                incorrect: function() {
+                    console.log("Password incorrect");
+                    return res.notFound();
+                },
+                success: function() {
+                    //req.session.me = user.id;
+                    console.log("SUCCESS");
+                    return res.ok();
+                }
+            })
         })
     }
 };
