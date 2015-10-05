@@ -8,7 +8,28 @@
 module.exports = {
 
   attributes: {
-
+    name: {
+      type: 'string',
+      required: true
+    },
+    email: {
+      type: 'string',
+      email: false, // Should be true, Dont know why error when set to true
+      required: true,
+      unique: true
+    },
+    password: {
+      type: 'string',
+      required: true
+    },
+    lastLoggedIn: {
+      type: 'date',
+      required: true,
+      defaultsTo: new Date(0)
+    },
+    gravatarUrl: {
+      type: 'string'
+    }
   }
 };
 

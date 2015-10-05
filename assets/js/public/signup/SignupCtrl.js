@@ -4,7 +4,7 @@
 
 angular.module("SignupMod")
     .controller("SignupCtrl", ['$scope', '$http', function($scope, $http) {
-        console.log("Signup Controller Initialized...")
+        console.log("Signup Controller Initialized...");
 
         $scope.runSignup = function() {
             console.log("Signing Up " + $scope.name);
@@ -15,7 +15,7 @@ angular.module("SignupMod")
                 email: $scope.email,
                 password: $scope.password
             })
-            .then(function onSuccess(response) {
+            .then(function onSuccess() {
                     window.location = '/user'
             })
             .catch(function onError(err) {
